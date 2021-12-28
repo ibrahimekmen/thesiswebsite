@@ -1,0 +1,21 @@
+header
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+        .container-fluid
+          button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+          a.navbar-brand(href="/") Twitter Data Analysis
+          #navbarSupportedContent.collapse.navbar-collapse
+            ul.navbar-nav.me-auto.mb-2.mb-lg-0
+              // men women dropdown navbar
+              li.nav-item.dropdown
+                a#navbarDropdown.nav-link.navbar-brand.dropdown-toggle(role='button' data-bs-toggle='dropdown' aria-expanded='false') Country
+                ul.dropdown-menu(aria-labelledby='navbarDropdown')
+                  li
+                    a.dropdown-item(href=`/women`) English
+                  li
+                    a.dropdown-item(href='/men') Türkçe
+
+            form#searchform.d-flex.mb-2.mb-lg-0(action="/search" method="get")
+              input.me-2(id='searchinput' type='text' name="searchString" placeholder='Search' aria-label='Search' required='')
+              button.btn.btn-outline-success(type='submit') Search
+            // right side sign up and sign up      
