@@ -14,8 +14,8 @@ function getDummyTrends(){
     {  "_id": {    "$oid": "627faeb99c1880553bb21a77"  },  "name": "#dreamchat",  "neg_result": 106,  "neu_result": 108,  "pos_result": 386,  "tweet_volume": 78101},
     {  "_id": {    "$oid": "627fcf799c1880553bfd8282"  },  "name": "#FACupFinal",  "neg_result": 11,  "neu_result": 66,  "pos_result": 23,  "tweet_volume": 54852},
     {  "_id": {    "$oid": "627faeb99c1880553bb21a4f"  },  "name": "#FoodShortageJoe",  "neg_result": 75,  "neu_result": 76,  "pos_result": 249,  "tweet_volume": 43605},
-    {  "_id": {    "$oid": "627fcbaa9c1880553bf4669c"  },  "name": "#RizeArtvinHavalimanı",  "neg_result": 27,  "neu_result": 5,  "pos_result": 18,  "tweet_volume": 34114},
-    {  "_id": {    "$oid": "627faeb99c1880553bb21b6f"  },  "name": "Good Saturday",  "neg_result": 43,  "neu_result": 198,  "pos_result": 59,  "tweet_volume": 28750},
+    {  "_id": {    "$oid": "628005c69c1880553b811434"  },  "name": "#Eurovision",  "neg_result": 215,  "neu_result": 405,  "pos_result": 730,  "tweet_volume": 34114},
+    {  "_id": {    "$oid": "627faeb99c1880553bb21b6f"  },  "name": "Good Saturday",  "neg_result": 43,  "neu_result": 198,  "pos_result": 59,  "tweet_volume": 3704852},
     {  "_id": {    "$oid": "627fc1909c1880553bdc59c5"  },  "name": "Vogue",  "neg_result": 4,  "neu_result": 81,  "pos_result": 115,  "tweet_volume": 27748}
     ];
     return trends;

@@ -22,39 +22,33 @@ block content
                             | Text of most favorited Tweet
             .col
                 .row.mb-5
-                    canvas#myChart(style="width: 400px; height: 400px; max-height: 100%")
+                    canvas#myChart(style='width:100%;max-width:600px')
                 .row
                     h1 pie chart
                 
-        script.
-            var oilCanvas = document.getElementById("oilChart");
-
-            Chart.defaults.font.family = "Lato";
-            Chart.defaults.font.size = 18;
-            Chart.defaults.color = "black";
-
-            var oilData = {
-                labels: [
-                    "Saudi Arabia",
-                    "Russia",
-                    "Iraq",
-                    "United Arab Emirates",
-                    "Canada"
-                ],
-                datasets: [
-                    {
-                        data: [133.3, 86.2, 52.2, 51.2, 50.2],
-                        backgroundColor: [
-                            "#FF6384",
-                            "#63FF84",
-                            "#84FF63",
-                            "#8463FF",
-                            "#6384FF"
-                        ]
+        
+                
+                script.
+                    var xValues = ["Positive", "Negative", "Neutral"];
+                    var yValues = [55, 49, 44];
+                    var barColors = [
+                    "#3DD6F5",
+                    "#F93535",
+                    "#C0C0C0",
+                    ];
+                    new Chart("myChart", {
+                    type: "pie",
+                    data: {
+                    labels: xValues,
+                    datasets: [{
+                    backgroundColor: barColors,
+                    data: yValues
                     }]
-            };
-
-            var pieChart = new Chart(oilCanvas, {
-            type: 'pie',
-            data: oilData
-            });
+                    },
+                    options: {
+                    title: {
+                    display: true,
+                    text: "World Wide Wine Production 2018"
+                    }
+                    }
+                    });
