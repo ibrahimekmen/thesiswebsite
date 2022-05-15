@@ -1,0 +1,60 @@
+extends layout.pug
+
+block content
+    .container
+        .row.text-center 
+            h1 #{trendName}
+        .row
+            h1 #{trendName}
+        .row
+            .col
+                .row.mb-5 
+                    .card(style='width: 18rem;')
+                        .card-body
+                            h5.card-title Most Retweeted Tweet
+                            p.card-text
+                            | Text of most retweeted tweet
+                .row
+                    .card(style='width: 18rem;')
+                        .card-body
+                            h5.card-title Most Favorited Tweet
+                            p.card-text
+                            | Text of most favorited Tweet
+            .col
+                .row.mb-5
+                    canvas#myChart(style="width: 400px; height: 400px; max-height: 100%")
+                .row
+                    h1 pie chart
+                
+        script.
+            var oilCanvas = document.getElementById("oilChart");
+
+            Chart.defaults.font.family = "Lato";
+            Chart.defaults.font.size = 18;
+            Chart.defaults.color = "black";
+
+            var oilData = {
+                labels: [
+                    "Saudi Arabia",
+                    "Russia",
+                    "Iraq",
+                    "United Arab Emirates",
+                    "Canada"
+                ],
+                datasets: [
+                    {
+                        data: [133.3, 86.2, 52.2, 51.2, 50.2],
+                        backgroundColor: [
+                            "#FF6384",
+                            "#63FF84",
+                            "#84FF63",
+                            "#8463FF",
+                            "#6384FF"
+                        ]
+                    }]
+            };
+
+            var pieChart = new Chart(oilCanvas, {
+            type: 'pie',
+            data: oilData
+            });
