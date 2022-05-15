@@ -40,10 +40,13 @@ block content
                                     - var trendNameLink = trend.name.startsWith('#') ? ("%23" + trend.name.slice(1)) : trend.name
                                     a(href= "/trend/" + trendNameLink) #{trend.name}
                                 td 
-                                    .progress
-                                        .progress-bar.bg-primary.fs-6(role='progressbar' style='width: 60%' aria-valuenow='60' aria-valuemin='0' aria-valuemax='100') 60%
-                                        .progress-bar.bg-danger.fs-6(role='progressbar' style='width: 30%' aria-valuenow='30' aria-valuemin='0' aria-valuemax='100') 30%
-                                        .progress-bar.bg-secondary.fs-6(role='progressbar' style='width: 10%' aria-valuenow='10' aria-valuemin='0' aria-valuemax='100') 10%
+                                    - var posPercent = (trend.pos_result *100 / (trend.pos_result+trend.neg_result+trend.neu_result))
+                                    - var negPercent = (trend.neg_result *100 / (trend.pos_result+trend.neg_result+trend.neu_result))
+                                    - var neuPercent = (trend.neu_result *100 / (trend.pos_result+trend.neg_result+trend.neu_result))
+                                    .progress.fs-7
+                                        .progress-bar.bg-primary(role='progressbar' style=`width: ${posPercent}%` aria-valuenow=`${posPercent}` aria-valuemin='0' aria-valuemax='100') #{posPercent.toFixed(2)} %
+                                        .progress-bar.bg-danger(role='progressbar' style=`width: ${negPercent}%` aria-valuenow=`${negPercent}` aria-valuemin='0' aria-valuemax='100') #{negPercent.toFixed(2)} %
+                                        .progress-bar.bg-secondary(role='progressbar' style=`width: ${neuPercent}%` aria-valuenow=`${neuPercent}` aria-valuemin='0' aria-valuemax='100') #{neuPercent.toFixed(2)} %
                                 td.text-center #{trend.tweet_volume == null ? "< 10000" : trend.tweet_volume}
         .row.my-4
             .col-3
