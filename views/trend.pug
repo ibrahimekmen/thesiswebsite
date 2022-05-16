@@ -1,54 +1,53 @@
 extends layout.pug
 
 block content
+    - var Trend = trend
     .container
         .row.text-center 
-            h1 #{trendName}
-        .row
-            h1 #{trendName}
+            h1 #{trend.name}
         .row
             .col
                 .row.mb-5 
                     .card(style='width: 18rem;')
                         .card-body
-                            h5.card-title Most Retweeted Tweet
-                            p.card-text
-                            | Text of most retweeted tweet
+                            h5.card-title Most Positive Tweet
+                            p.card-text Louder than bombs💜💜💜💜#MyBTSTracks
                 .row
                     .card(style='width: 18rem;')
                         .card-body
-                            h5.card-title Most Favorited Tweet
-                            p.card-text
-                            | Text of most favorited Tweet
+                            h5.card-title Most Negative Tweet
+                            p.card-text Am I Wrong #MyBTSTracks
             .col
-                .row.mb-5
+                .row.text-center
+                    h5 Tweet Count: #{trend.tweet_volume}
+                    - var country = trend.lang === "tr" ? "Turkey" : "America"
+                    h5 Country: #{country}
+                .row.mb-5.text-center
+                    h1.text-center Pie Chart
                     canvas#myChart(style='width:100%;max-width:600px')
-                .row
-                    h1 pie chart
-                
-        
-                
+
                 script.
+                    const trend = !{JSON.stringify(trend)};
                     var xValues = ["Positive", "Negative", "Neutral"];
-                    var yValues = [55, 49, 44];
+                    var yValues = [trend.pos_result, trend.neg_result, trend.neu_result];
                     var barColors = [
-                    "#3DD6F5",
-                    "#F93535",
-                    "#C0C0C0",
+                        "#3DD6F5",
+                        "#F93535",
+                        "#C0C0C0",
                     ];
                     new Chart("myChart", {
-                    type: "pie",
-                    data: {
-                    labels: xValues,
-                    datasets: [{
-                    backgroundColor: barColors,
-                    data: yValues
-                    }]
-                    },
-                    options: {
-                    title: {
-                    display: true,
-                    text: "World Wide Wine Production 2018"
-                    }
-                    }
+                        type: "pie",
+                        data: {
+                            labels: xValues,
+                            datasets: [{
+                                backgroundColor: barColors,
+                                data: yValues
+                            }]
+                        },
+                        options: {
+                            title: {
+                                display: true,
+                                text: `${trend.name} Analysis`
+                            }
+                        }
                     });
