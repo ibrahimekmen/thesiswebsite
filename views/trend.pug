@@ -22,14 +22,13 @@ block content
                     h5 Tweet Count: #{trend.tweet_volume}
                     - var country = trend.lang === "tr" ? "Turkey" : "America"
                     h5 Country: #{country}
-                .row.mb-5.text-center
-                    h1.text-center Pie Chart
-                    canvas#myChart(style='width:100%;max-width:600px')
+                .row.mb-5.text-center()
+                    canvas#myChart(style='width:100%; max-width:600px')
 
                 script.
                     const trend = !{JSON.stringify(trend)};
                     var xValues = ["Positive", "Negative", "Neutral"];
-                    var yValues = [trend.pos_result, trend.neg_result, trend.neu_result];
+                    var yValues = [((trend.pos_result * trend.tweet_volume) / 100).toFixed(0), ((trend.neg_result * trend.tweet_volume) / 100).toFixed(0), ((trend.neu_result * trend.tweet_volume) / 100).toFixed(0)];
                     var barColors = [
                         "#3DD6F5",
                         "#F93535",
