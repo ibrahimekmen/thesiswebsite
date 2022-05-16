@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const services = require('./services.js');
 const dummyData = require('./dummyData.js');
+const trendPageController = require('./trendPageController.js');
 const app = express();
 const path = require('path');
 
@@ -17,10 +18,15 @@ app.get('/', (req, res) => {
     });
 })
 
-app.get('/trend/:trendName', (req, res) => {
+app.get('/trend/', (req, res) => {
     res.render('trend',{
-        trendName : req.params.trendName
+        trends : dummyData.getDummyTrends(),
+        tweets : dummyData.getDummyTweets()
     });
+})
+
+app.get('/trend/:trendName', (req, res) => {
+    trendPageController.render(req,res)
 })
 
 app.use(function(req, res, next) {
@@ -29,6 +35,14 @@ app.use(function(req, res, next) {
     next(error404);
 });
 
-
+app.use(function(err, req, res, next) {
+    res.locals.message = err.message;
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error',{
+        message: err.message,
+        error: err
+    });
+  });
 
 module.exports = app.listen(process.env.PORT || 3000);
