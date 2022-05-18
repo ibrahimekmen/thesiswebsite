@@ -1,18 +1,34 @@
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const { MongoClient } = require('mongodb');
+
 require('dotenv').config();
-const database_URI = `mongodb+srv://dbAdmin:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.mongodb.net/cluster0?retryWrites=true&w=majority`;
-const client = new MongoClient(database_URI);  
 
-async function getMalMert(){
-    const response = await fetch(`http://localhost:8000/malmert/2`);
-    return await response.json();
+const database_URI = `mongodb+srv://dbAdmin:${process.env.DB_PASSWORD}@${process.env.DB_NAME}.mongodb.net/cluster0?retryWrites=true&w=majority`; 
+
+function getTopTrends(lang, time) {
+    return MongoClient.connect(database_URI)
+        .then(mc => mc.db('data_analysis') 
+                    .collection('trends')
+                    .find({"created_at" : {$exists: true, $gt: time}, "lang" : lang})
+                    .limit(10)
+                    .sort({"created_at": -1,"tweet_volume": -1})
+                    .toArray()
+                    .then(as => ((mc.close()), as)))
+        .catch(e => console.log(e));
 }
 
-async function getTrends(){
-    const response = await fetch(`http://localhost:8000/malmert/2`);
-    return await response.json();
+function getTodayTopTrends(lang) {
+    return MongoClient.connect(database_URI)
+        .then(mc => mc.db('data_analysis') 
+                    .collection('trends')
+                    .find({"created_at" : {$exists: true}, "lang" : lang})
+                    .limit(10)
+                    .sort({"created_at": -1, "tweet_volume": -1})
+                    .toArray()
+                    .then(as => ((mc.close()), as)))
+        .catch(e => console.log(e));
 }
+
 
 function getTrendByName(trendName) {
     return MongoClient.connect(database_URI)
@@ -22,7 +38,19 @@ function getTrendByName(trendName) {
                     .toArray()                   
                     .then(as => (mc.close(), as)))
         .catch(e => console.log(e));
-} 
+}
+
+function getFavoriteTweets(lang, time) {
+    return MongoClient.connect(database_URI)
+        .then(mc => mc.db('data_analysis')
+                    .collection('tweets')
+                    .find({"created_at" : {$exists: true, $gt: time}, "lang" : lang})
+                    .limit(10)
+                    .sort({ "favorite_count": -1, "created_at": -1,})
+                    .toArray()
+                    .then(as => (mc.close(), as)))
+        .catch(e => console.log(e));
+}
 
 function getMostPositiveTweet(trendName){
     return MongoClient.connect(database_URI)
@@ -36,25 +64,10 @@ function getMostPositiveTweet(trendName){
         .catch(e => console.log(e));
 }
 
-// async function run() {
-//     try {
-//       await client.connect();
-//       const database = client.db('data_analysis');
-//       const movies = database.collection('trends');
-//       // Query for a movie that has the title 'Back to the Future'
-//       const query = { title: 'Back to the Future' };
-//       const movie = await movies.findOne(query);
-//       console.log(movie);
-//     } finally {
-//       // Ensures that the client will close when you finish/error
-//       await client.close();
-//     }
-//   }
-//   run().catch(console.dir);
-
 module.exports = {
-    getMalMert,
-    getTrends,
     getTrendByName,
-    getMostPositiveTweet
+    getTodayTopTrends,
+    getMostPositiveTweet,
+    getTopTrends,
+    getFavoriteTweets
 }

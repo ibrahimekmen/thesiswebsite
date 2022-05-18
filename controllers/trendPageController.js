@@ -1,4 +1,4 @@
-const services = require('./services.js');
+const services = require('../services.js');
 
 function render(req,res){
     trendName = req.params.trendName
