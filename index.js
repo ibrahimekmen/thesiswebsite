@@ -2,7 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const services = require('./services.js');
 const dummyData = require('./dummyData.js');
-const trendPageController = require('./trendPageController.js');
+const trendPageController = require('./controllers/trendPageController.js');
+const homePageController = require('./controllers/homePageController.js');
 const app = express();
 const path = require('path');
 
@@ -12,14 +13,11 @@ app.use('/static', express.static(path.join(__dirname, 'public')))
 app.set('view engine','pug');
 
 app.get('/', (req, res) => {
-    res.render('home',{
-        trends : dummyData.getDummyTrends(),
-        tweets : dummyData.getDummyTweets()
-    });
+    homePageController.render(req,res);
 })
 
 app.get('/trend', (req, res) => {
-    res.render('trend',{
+    res.render('home',{
         trends : dummyData.getDummyTrends(),
         tweets : dummyData.getDummyTweets()
     });
