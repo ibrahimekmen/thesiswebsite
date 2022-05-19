@@ -2,10 +2,11 @@ const services = require('../services.js');
 const timeUtil = require('../utility/time.js');
 
 function render(req,res){
+    // her trendin ve tweetin created_at attribute u date e çevrildemediği için sıkıntı çıkıyor toISOString() eklenebilir
     trendName = req.params.trendName
-    const today = timeUtil.getLastDay().toISOString();
-    const lastWeek = timeUtil.getLastWeek().toISOString();
-    const lastMonth = timeUtil.getLastMonth().toISOString();
+    const today = timeUtil.getLastDay();
+    const lastWeek = timeUtil.getLastWeek();
+    const lastMonth = timeUtil.getLastMonth();
     const tr = "tr";
     const usa = "en"
     return Promise.all([
@@ -15,10 +16,10 @@ function render(req,res){
         services.getTodayTopTrends(usa),
         services.getTopTrends(usa,lastWeek),
         services.getTopTrends(usa,lastMonth),
-        services.getFavoriteTweets(tr,today),
+        services.getFavoriteTweetsToday(tr),
         services.getFavoriteTweets(tr,lastWeek),
         services.getFavoriteTweets(tr,lastMonth),
-        services.getFavoriteTweets(usa,today),
+        services.getFavoriteTweetsToday(usa),
         services.getFavoriteTweets(usa,lastWeek),
         services.getFavoriteTweets(usa,lastMonth)]).then(data =>{
         res.render('home2',{
