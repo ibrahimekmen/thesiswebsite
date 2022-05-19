@@ -3,17 +3,17 @@ extends layout.pug
 block content
     - var Trend = trend
     .container
-        .row.text-center 
+        .row.text-center.mb-5
             h1 #{trend.name}
         .row
             .col
                 .row.mb-5 
-                    .card(style='width: 18rem;')
+                    .card.border-3
                         .card-body
                             h5.card-title Most Positive Tweet
                             p.card-text Louder than bombs💜💜💜💜#MyBTSTracks
                 .row
-                    .card(style='width: 18rem;')
+                    .card.border-3
                         .card-body
                             h5.card-title Most Negative Tweet
                             p.card-text Am I Wrong #MyBTSTracks
@@ -22,17 +22,17 @@ block content
                     h5 Tweet Count: #{trend.tweet_volume}
                     - var country = trend.lang === "tr" ? "Turkey" : "America"
                     h5 Country: #{country}
-                .row.mb-5.text-center()
+                .row.mb-5.text-center
                     canvas#myChart(style='width:100%; max-width:600px')
 
                 script.
                     const trend = !{JSON.stringify(trend)};
-                    var xValues = ["Positive", "Negative", "Neutral"];
-                    var yValues = [((trend.pos_result * trend.tweet_volume) / 100).toFixed(0), ((trend.neg_result * trend.tweet_volume) / 100).toFixed(0), ((trend.neu_result * trend.tweet_volume) / 100).toFixed(0)];
+                    var xValues = ["Negative", "Neutral", "Positive"];
+                    var yValues = [((trend.neg_result * trend.tweet_volume) / 100).toFixed(0), ((trend.neu_result * trend.tweet_volume) / 100).toFixed(0),((trend.pos_result * trend.tweet_volume) / 100).toFixed(0)];
                     var barColors = [
-                        "#3DD6F5",
                         "#F93535",
                         "#C0C0C0",
+                        "#3DD6F5"
                     ];
                     new Chart("myChart", {
                         type: "pie",

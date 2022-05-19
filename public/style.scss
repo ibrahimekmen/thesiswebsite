@@ -20,19 +20,12 @@ a::before {
 }
 
 a:hover::before {
-transform-origin: left;
-transform: scaleX(1);
+    transform-origin: left;
+    transform: scaleX(1);
 }
 
 a:hover {
     color: black;
-}
-
-footer {
-    clear: both;
-    position: relative;
-    height: 200px;
-    margin-bottom: -200px;
 }
 
 .progress-bar{

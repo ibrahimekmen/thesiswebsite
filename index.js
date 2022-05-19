@@ -16,12 +16,6 @@ app.get('/', (req, res) => {
     homePageController.render(req,res);
 })
 
-app.get('/trend', (req, res) => {
-    res.render('home',{
-        trends : dummyData.getDummyTrends(),
-        tweets : dummyData.getDummyTweets()
-    });
-})
 
 
 app.get('/trend/:trendName', (req, res) => {
