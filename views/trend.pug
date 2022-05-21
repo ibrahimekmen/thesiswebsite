@@ -30,7 +30,8 @@ block content
                     const trend = !{JSON.stringify(trend)};
                     var xValues = ["Negative", "Neutral", "Positive"];
                     var operand = trend.tweet_volume == null ? 9876 : trend.tweet_volume;
-                    var yValues = [((trend.neg_result * 100) / operand).toFixed(0), ((trend.neu_result * 100) / operand).toFixed(0),((trend.pos_result * 100) / operand).toFixed(0)];
+                    var allTweets = trend.neg_result + trend.pos_result + trend.neu_result;
+                    var yValues = [((trend.neg_result * operand) / allTweets).toFixed(0), ((trend.neu_result * operand) / allTweets).toFixed(0),((trend.pos_result * operand) / allTweets).toFixed(0)];
                     var barColors = [
                         "#F93535",
                         "#C0C0C0",
