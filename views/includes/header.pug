@@ -8,8 +8,8 @@ header
         span.navbar-toggler-icon
       #navbarSupportedContent.collapse.navbar-collapse
         ul.navbar-nav.me-auto.mb-2.mb-lg-0
-        form.d-flex
-          input.form-control.me-2(type='search' name='searchString' placeholder='Search' aria-label='Search' required='')
+        form.d-flex(action="/search", method="get")
+          input.form-control.me-2(type='search' name='searchString' placeholder='Search Trends' aria-label='Search' required='')
           button.btn.btn-outline-success(type='submit') Search
   br
   br

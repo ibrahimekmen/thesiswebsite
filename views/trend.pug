@@ -8,15 +8,15 @@ block content
         .row
             .col
                 .row.mb-5 
-                    .card.border-3
+                    .card.border-3.bg-info
                         .card-body
                             h5.card-title Most Positive Tweet
-                            p.card-text Louder than bombs💜💜💜💜#MyBTSTracks
+                            p.card-text #{mostPos}
                 .row
-                    .card.border-3
+                    .card.border-3.bg-danger.text-light
                         .card-body
                             h5.card-title Most Negative Tweet
-                            p.card-text Am I Wrong #MyBTSTracks
+                            p.card-text #{mostNeg}
             .col
                 .row.text-center
                     h5 Tweet Count: #{trend.tweet_volume}
@@ -28,7 +28,8 @@ block content
                 script.
                     const trend = !{JSON.stringify(trend)};
                     var xValues = ["Negative", "Neutral", "Positive"];
-                    var yValues = [((trend.neg_result * trend.tweet_volume) / 100).toFixed(0), ((trend.neu_result * trend.tweet_volume) / 100).toFixed(0),((trend.pos_result * trend.tweet_volume) / 100).toFixed(0)];
+                    var operand = trend.tweet_volume == null ? 10000 : trend.tweet_volume;
+                    var yValues = [((trend.neg_result * operand) / 100).toFixed(0), ((trend.neu_result * operand) / 100).toFixed(0),((trend.pos_result * operand) / 100).toFixed(0)];
                     var barColors = [
                         "#F93535",
                         "#C0C0C0",
