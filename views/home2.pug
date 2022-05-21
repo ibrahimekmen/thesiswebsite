@@ -47,7 +47,7 @@ block content
                                         .progress-bar.bg-primary(id=`trend-bar-pos-${index}` role='progressbar' style=`width: ${posPercent}%` aria-valuenow=`${posPercent}` aria-valuemin='0' aria-valuemax='100') #{posPercent.toFixed(2)} %
                                         .progress-bar.bg-danger(id=`trend-bar-neg-${index}` role='progressbar' style=`width: ${negPercent}%` aria-valuenow=`${negPercent}` aria-valuemin='0' aria-valuemax='100') #{negPercent.toFixed(2)} %
                                         .progress-bar.bg-secondary(id=`trend-bar-neu-${index}` role='progressbar' style=`width: ${neuPercent}%` aria-valuenow=`${neuPercent}` aria-valuemin='0' aria-valuemax='100') #{neuPercent.toFixed(2)} %
-                                td.text-center(id=`trend-vol-${index}`) #{trend.tweet_volume == null ? "< 10000" : trend.tweet_volume}
+                                td.text-center(id=`trend-vol-${index}`) #{trend.tweet_volume == null ? `< 10000` : trend.tweet_volume}
         .row.my-4
             .col-12.col-lg-3.col-md-4.col-sm-6.mb-2.mb-sm-0
                 .btn-group(id="tweet-date" role='group' aria-label='Basic radio toggle button group')
