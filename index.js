@@ -16,6 +16,14 @@ app.get('/', (req, res) => {
     homePageController.render(req,res);
 })
 
+app.get('/search', (req, res) => {
+    let searchString = req.query.searchString;
+    req.params.trendName = searchString;
+    searchString = searchString.startsWith('#') ? ("%23" + searchString.slice(1)) : searchString
+    
+    
+    res.redirect(`/trend/${searchString}`);
+})
 
 
 app.get('/trend/:trendName', (req, res) => {

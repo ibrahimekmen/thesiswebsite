@@ -69,8 +69,9 @@ block content
                     thead
                         tr
                             th.col-1(scope='col') #
-                            th.col-9(scope='col') Popular Tweet
+                            th.col-8(scope='col') Popular Tweet
                             th.col-1.text-center(scope='col') Trend
+                            th.col-1.text-center(scope='col') Analysis
                             th.col-1.text-center(scope='col') Favorite Count
                     tbody.tweets
                         each tweet, index in tweetTrToday
@@ -80,6 +81,13 @@ block content
                                 td.text-center
                                     - var tweettrendNameLink = tweet.trend_name.startsWith('#') ? ("%23" + tweet.trend_name.slice(1)) : tweet.trend_name
                                     a(id=`tweet-tname-${index}` href= "/trend/" + tweettrendNameLink) #{tweet.trend_name}
+                                - var tweet_result = ""
+                                - if(tweet.vader_result > 0.05){
+                                -     tweet_result = "+";
+                                -}else if(tweet.vader_result < -0.05){
+                                -     tweet_result = "-";    
+                                -}else{tweet_result = "="}
+                                td.text-center(id=`tweet-result-${index}`) #{tweet_result}
                                 td.text-center(id=`tweet-fav-${index}`) #{tweet.favorite_count == null ? "0" : tweet.favorite_count}
     
     script.
@@ -95,8 +103,9 @@ block content
         let tweetUsaToday = !{JSON.stringify(tweetUsaToday)};
         let tweetUsaLastWeek = !{JSON.stringify(tweetUsaLastWeek)};
         let tweetUsaLastMonth = !{JSON.stringify(tweetUsaLastMonth)};
-        
+
         function populateTrendsTable(chosenTrends){
+            console.dir(chosenTrends);
             for (let i = 0; i < 10; i++){
                 let currentTrendLink = $(`#trend-name-${i}`);
                 let currentTrendVol = $(`#trend-vol-${i}`);
@@ -104,12 +113,15 @@ block content
                 let currentTrendNeg = $(`#trend-bar-neg-${i}`);
                 let currentTrendNeu = $(`#trend-bar-neu-${i}`);
 
+                
+
                 let posPercent = (chosenTrends[i].pos_result * 100 / (chosenTrends[i].pos_result + chosenTrends[i].neg_result + chosenTrends[i].neu_result)).toFixed(2);
                 let negPercent = (chosenTrends[i].neg_result * 100 / (chosenTrends[i].pos_result + chosenTrends[i].neg_result + chosenTrends[i].neu_result)).toFixed(2);
                 let neuPercent = (chosenTrends[i].neu_result * 100 / (chosenTrends[i].pos_result + chosenTrends[i].neg_result + chosenTrends[i].neu_result)).toFixed(2);
 
                 currentTrendLink.text(chosenTrends[i].name);
-                currentTrendLink.attr("href",`/trend/${chosenTrends[i].name}`);
+                let trendRoute = chosenTrends[i].name.startsWith('#') ? ("%23" + chosenTrends[i].name.slice(1)) : chosenTrends[i].name
+                currentTrendLink.attr("href",`/trend/${trendRoute}`);
 
                 currentTrendVol.text(chosenTrends[i].tweet_volume == null ? "< 10000" : chosenTrends[i].tweet_volume);
 
@@ -132,13 +144,25 @@ block content
                 let currentTweetText = $(`#tweet-text-${i}`);
                 let currentTweetLink = $(`#tweet-tname-${i}`);
                 let currentTweetFav = $(`#tweet-fav-${i}`);
+                let currentTweetResult = $(`#tweet-result-${i}`);
 
                 currentTweetText.text(chosenTweets[i].full_text);
-
+                let trendLink = chosenTweets[i].trend_name.startsWith('#') ? ("%23" + chosenTweets[i].trend_name.slice(1)) : chosenTweets[i].trend_name
                 currentTweetLink.text(chosenTweets[i].trend_name);
-                currentTweetLink.attr("href",`/trend/${chosenTweets[i].trend_name}`);
+                let tweetRoute = chosenTweets[i].trend_name.startsWith('#') ? ("%23" + chosenTweets[i].trend_name.slice(1)) : chosenTweets[i].trend_name
+                currentTweetLink.attr("href",`/trend/${tweetRoute}`);
 
                 currentTweetFav.text(chosenTweets[i].favorite_count == null ? "< 10000" : chosenTweets[i].favorite_count);
+
+                let nextTweetResult = "";
+                if(chosenTweets[i].vader_result > 0.05){
+                    nextTweetResult = "+";
+                }else if(chosenTweets[i].vader_result < -0.05){
+                    nextTweetResult = "-";  
+                }else{
+                    nextTweetResult = "=";
+                }
+                currentTweetResult.text(nextTweetResult);
             }
         }
 

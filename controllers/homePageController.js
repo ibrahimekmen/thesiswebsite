@@ -10,16 +10,16 @@ function render(req,res){
     const tr = "tr";
     const usa = "en"
     return Promise.all([
-        services.getTodayTopTrends(tr),
+        services.getTopTrends(tr,today),
         services.getTopTrends(tr,lastWeek),
         services.getTopTrends(tr,lastMonth),
-        services.getTodayTopTrends(usa),
+        services.getTopTrends(usa,today),
         services.getTopTrends(usa,lastWeek),
         services.getTopTrends(usa,lastMonth),
-        services.getFavoriteTweetsToday(tr),
+        services.getFavoriteTweets(tr,today),
         services.getFavoriteTweets(tr,lastWeek),
         services.getFavoriteTweets(tr,lastMonth),
-        services.getFavoriteTweetsToday(usa),
+        services.getFavoriteTweets(usa,today),
         services.getFavoriteTweets(usa,lastWeek),
         services.getFavoriteTweets(usa,lastMonth)]).then(data =>{
         res.render('home2',{
