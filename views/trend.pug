@@ -21,7 +21,7 @@ block content
                 .row.text-center
                     - var tweet_volume = trend.tweet_volume || 10000;
                     h5 Tweet Volume: #{tweet_volume}
-                    - var country = trend.lang === "tr" ? "Turkey" : "America"
+                    - var country = trend.lang === "tr" ? "Turkey" : "USA"
                     h5 Country: #{country}
                 .row.mb-5.text-center
                     canvas#myChart(style='width:100%; max-width:600px')
